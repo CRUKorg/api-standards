@@ -128,11 +128,17 @@ Error responses should include a common HTTP status code, message for the develo
        http://drupal.org/node/444444",
     }
 
-Use three simple, common response codes indicating (1) success, (2) failure due to client-side problem, (3) failure due to server-side problem:
-* 200 - OK
-* 400 - Bad Request
-* 500 - Internal Server Error
-
+Use the following simple, common response codes indicating success (2xx), failure due to client-side problem (4xx), or failure due to server-side problem (5xx):
+* 200 - OK.
+The action the client has requested has successfully been carried out.
+* 201 - Created.
+A new resource has successfully been created at the client's request.
+* 400 - Bad Request.
+The request can not or will not be processed due to something that is perceived to be a client error (e.g. malformed request body).
+* 409 - Conflict.
+The client has attempted to put a resource in to an impossible or inconsistent state (e.g. data in the request body that does not pass validation).
+* 500 - Internal Server Error.
+The server encountered an unexpected condition which prevented it from fulfilling the request.
 
 ## Versions
 
