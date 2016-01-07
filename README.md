@@ -9,7 +9,6 @@
 * [Versions](#versions)
 * [Record limits](#record-limits)
 * [Request & Response Examples](#request--response-examples)
-* [Mock Responses](#mock-responses)
 * [JSONP](#jsonp)
 
 ## Guidelines
@@ -128,11 +127,19 @@ Error responses should include a common HTTP status code, message for the develo
        http://drupal.org/node/444444",
     }
 
-Use three simple, common response codes indicating (1) success, (2) failure due to client-side problem, (3) failure due to server-side problem:
-* 200 - OK
-* 400 - Bad Request
-* 500 - Internal Server Error
-
+Use the following simple, common response codes indicating success (2xx), failure due to client-side problem (4xx), or failure due to server-side problem (5xx):
+* 200 - OK.
+The action the client has requested has successfully been carried out.
+* 201 - Created.
+A new resource has successfully been created at the client's request.
+* 400 - Bad Request.
+The request can not or will not be processed due to something that is perceived to be a client error (e.g. malformed request body).
+* 404 - Not Found.
+The resource or path could not be found.
+* 409 - Conflict.
+The client has attempted to put a resource in to an impossible or inconsistent state (e.g. data in the request body that does not pass validation).
+* 500 - Internal Server Error.
+The server encountered an unexpected condition which prevented it from fulfilling the request.
 
 ## Versions
 
@@ -256,14 +263,6 @@ Request body:
             "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ante ut augue scelerisque ornare. Aliquam tempus rhoncus quam vel luctus. Sed scelerisque fermentum fringilla. Suspendisse tincidunt nisl a metus feugiat vitae vestibulum enim vulputate. Quisque vehicula dictum elit, vitae cursus libero auctor sed. Vestibulum fermentum elementum nunc. Proin aliquam erat in turpis vehicula sit amet tristique lorem blandit. Nam augue est, bibendum et ultrices non, interdum in est. Quisque gravida orci lobortis... "
         }
     ]
-
-
-## Mock Responses
-It is suggested that each resource accept a 'mock' parameter on the testing server. Passing this parameter should return a mock data response (bypassing the backend).
-
-Implementing this feature early in development ensures that the API will exhibit consistent behavior, supporting a test driven development methodology.
-
-Note: If the mock parameter is included in a request to the production environment, an error should be raised.
 
 
 ## JSONP
