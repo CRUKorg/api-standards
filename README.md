@@ -78,13 +78,13 @@ These guidelines aim to support a truly RESTful API. Here are a few exceptions:
 HTTP verbs, or methods, should be used in compliance with their definitions under the [HTTP/1.1](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) standard.
 The action taken on the representation will be contextual to the media type being worked on and its current state. Here's an example of how HTTP verbs map to create, read, update, delete operations in a particular context:
 
-| HTTP METHOD | POST            | GET       | PUT         | DELETE |
-| ----------- | --------------- | --------- | ----------- | ------ |
-| CRUD OP     | CREATE          | READ      | UPDATE      | DELETE |
-| /dogs       | Create new dogs | List dogs | Bulk update | Delete all dogs |
-| /dogs/1234  | Error           | Show Bo   | If exists, update Bo; If not, error | Delete Bo |
+| HTTP METHOD | POST            | GET       | PUT         | PATCH       | DELETE |
+| ----------- | --------------- | --------- | ----------- | ----------- | ------ |
+| CRUD OP     | CREATE          | READ      | UPDATE      | PARTIAL UPDATE | DELETE |
+| /dogs       | Create new dogs | List dogs | Bulk update | Bulk update | Delete all dogs |
+| /dogs/1234  | Error           | Show Bo   | If exists, update whole Bo; If not, error | If exists, update Bo fields specified; If not, error | Delete Bo |
 
-(Example from Web API Design, by Brian Mulloy, Apigee.)
+(Edited example from Web API Design, by Brian Mulloy, Apigee.)
 
 
 ## Responses
@@ -115,16 +115,11 @@ Values in keys:
 
 ## Error handling
 
-Error responses should include a common HTTP status code, message for the developer, message for the end-user (when appropriate), internal error code (corresponding to some specific internally determined ID), links where developers can find more info. For example:
+Error responses should include a common HTTP status code and a message for the end-user (when appropriate). For example:
 
     {
       "status" : 400,
-      "developerMessage" : "Verbose, plain language description of the problem. Provide developers
-       suggestions about how to solve their problems here",
-      "userMessage" : "This is a message that can be passed along to end-users, if needed.",
-      "errorCode" : "444444",
-      "moreInfo" : "http://www.example.cruk.org/developer/path/to/help/for/444444,
-       http://drupal.org/node/444444",
+      "userMessage" : "This is a message that can be passed along to end-users, if needed."
     }
 
 Use the following simple, common response codes indicating success (2xx), failure due to client-side problem (4xx), or failure due to server-side problem (5xx):
